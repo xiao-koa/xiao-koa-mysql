@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "diagnostics": true,
+    "emitDecoratorMetadata":true,
+    "declarationDir": "./lib",
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "declaration": true,
+    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "*": ["lib/*"]
+    },
+  },
+  "exclude": ["node_modules", "dist", "**/*.js", "lib"],
+}

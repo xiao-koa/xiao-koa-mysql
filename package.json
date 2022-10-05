@@ -1,0 +1,30 @@
+{
+  "name": "xiao-koa-mysql",
+  "version": "1.0.0",
+  "description": "XiaoKoa快速开发系列之操作MySQL插件",
+  "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build:lib": "node ./scripts/build.js"
+  },
+  "keywords": [
+    "xiao-koa",
+    "xiao-koa-mysql",
+    "xuanxiaoqian"
+  ],
+  "author": "xuanxiaoqian",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mysql": "^2.15.21",
+    "@types/node": "^18.7.18",
+    "esbuild": "^0.15.7",
+    "typescript": "^4.8.4",
+    "zx": "^7.0.8"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13"
+  }
+}
