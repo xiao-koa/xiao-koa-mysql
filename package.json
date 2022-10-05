@@ -1,6 +1,6 @@
 {
   "name": "xiao-koa-mysql",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "XiaoKoa快速开发系列之操作MySQL插件",
   "main": "./lib/index.js",
   "files": [
@@ -27,10 +27,11 @@
   "devDependencies": {
     "@types/mysql": "^2.15.21",
     "@types/node": "^18.7.18",
+    "@types/yamljs": "^0.2.31",
     "esbuild": "^0.15.7",
-    "typescript": "^4.8.4",
-    "zx": "^7.0.8",
     "mysql": "^2.18.1",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^4.8.4",
+    "zx": "^7.0.8"
   }
 }

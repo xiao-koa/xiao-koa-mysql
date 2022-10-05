@@ -4,19 +4,34 @@ import { FunctionAnnotation } from './decoratorType'
 
 const projectFile: string[] = []
 
-var pool = mysql.createPool({
-  connectionLimit: 10,
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'test',
-})
+let sqlConfig: any
+
+var pool: mysql.Pool
+
+export const load = (folder: string, JsonStr: any): any => {
+  sqlConfig = JsonStr['mysql']
+
+  pool = mysql.createPool({
+    connectionLimit: sqlConfig?.connectionLimit ?? 10,
+    host: String(sqlConfig?.host ?? null),
+    user: String(sqlConfig?.user ?? null),
+    password: String(sqlConfig?.password ?? null),
+    database: String(sqlConfig?.database ?? null),
+  })
+
+  getFileList(folder, projectFile)
+
+  projectFile.map((item) => {
+    require(item)
+  })
+
+  return CurrentServiceMap
+}
 
 var db: any = {}
 
 db.query = function (sql: any, params: any) {
   return new Promise((resolve, reject) => {
-    // 取出链接
     pool.getConnection(function (err, connection) {
       if (err) {
         reject(err)
@@ -24,7 +39,6 @@ db.query = function (sql: any, params: any) {
       }
 
       connection.query(sql, params, function (error, results, fields) {
-        console.log(`${sql}=>${params}`)
         connection.release()
         if (error) {
           reject(error)
@@ -66,14 +80,4 @@ export const Sql = function (sql: string): FunctionAnnotation {
       currentService[propertyKey] = p
     })
   }
-}
-
-export const load = (folder: string): any => {
-  getFileList(folder, projectFile)
-
-  projectFile.map((item) => {
-    require(item)
-  })
-
-  return CurrentServiceMap
 }
