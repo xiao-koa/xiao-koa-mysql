@@ -1,5 +1,5 @@
 {
-  "name": "xiao-koa-mysql",
+  "name": "@xiao-koa/xiao-koa-mysql",
   "version": "1.0.1",
   "description": "XiaoKoa快速开发系列之操作MySQL插件",
   "main": "./lib/index.js",
