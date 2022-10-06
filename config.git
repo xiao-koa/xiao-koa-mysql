@@ -6,10 +6,10 @@
 	symlinks = false
 	ignorecase = true
 [remote "gitee"]
-	url = https://gitee.com/xuanxiaoqian/xiao-koa.git
+	url = https://gitee.com/xiao-koa/xiao-koa-mysql.git
 	fetch = +refs/heads/*:refs/remotes/gitee/*
 [remote "github"]
-	url = https://github.com/xuanxiaoqian/xiao-koa.git
+	url = https://github.com/xiao-koa/xiao-koa-mysql.git
 	fetch = +refs/heads/*:refs/remotes/github/*
 [branch "master"]
 	remote = gitee
