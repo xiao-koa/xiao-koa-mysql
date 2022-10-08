@@ -1,6 +1,6 @@
 {
-  "name": "@xiao-koa/xiao-koa-mysql",
-  "version": "1.0.1",
+  "name": "xiao-koa-mysql",
+  "version": "1.0.3",
   "description": "XiaoKoa快速开发系列之操作MySQL插件",
   "main": "./lib/index.js",
   "files": [
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/xiao-koa/xiao-koa-mysql"
   },
   "author": "xuanxiaoqian",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/xiao-koa/xiao-koa-mysql/issues"
   },
