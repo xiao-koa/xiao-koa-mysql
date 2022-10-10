@@ -18,6 +18,13 @@ export const load = (folder: string, JsonStr: any): any => {
     password: String(sqlConfig?.password ?? null),
     database: String(sqlConfig?.database ?? null),
   })
+  // 第一回合查询是否能链接成功,用于报错用户名密码错误
+  pool.getConnection(function (err) {
+    if (err) {
+      console.log(err)
+      return
+    }
+  })
 
   getFileList(folder, projectFile)
 
@@ -30,7 +37,7 @@ export const load = (folder: string, JsonStr: any): any => {
 
 var db: any = {}
 
-db.query = function (sql: any, params: any) {
+db.query = function (sql: any) {
   return new Promise((resolve, reject) => {
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -38,7 +45,7 @@ db.query = function (sql: any, params: any) {
         return
       }
 
-      connection.query(sql, params, function (error, results, fields) {
+      connection.query(sql, function (error, results) {
         connection.release()
         if (error) {
           reject(error)
