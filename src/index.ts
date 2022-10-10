@@ -4,10 +4,10 @@ import { load } from './decorator'
 
 export * from './decorator'
 
-export default (dir: string, ServiceMap: Map<string, Object>, configJson: any) => {
-  const currentServiceMap = load(dir, configJson)
+export default (xiaoKoaConfig: any) => {
+  const currentServiceMap = load(xiaoKoaConfig['dirPath'], xiaoKoaConfig['JsonStr'])
 
   for (var [key, value] of currentServiceMap) {
-    ServiceMap.set(key, value)
+    xiaoKoaConfig['ServiceMap'].set(key, value)
   }
 }
