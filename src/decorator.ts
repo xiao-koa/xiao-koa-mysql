@@ -76,10 +76,18 @@ export const Sql = function (sql: string): FunctionAnnotation {
           getFunctionArgsName(target.toString())?.map((item, index) => {
             funVarMap[item] = args[index]
 
-            const reg = new RegExp(`#{+\s*${item}+\s*}`, 'g')
+            const spliceReg = new RegExp(`#{+\s*${item}+\s*}`, 'g')
+            const evalReg = new RegExp(`&{+\s*${item}+\s*}`, 'g')
 
-            sql = sql.replace(reg, args[index])
+            if (spliceReg.test(sql)) {
+              sql = sql.replace(spliceReg, `'${args[index]}'`)
+            } else if (evalReg.test(sql)) {
+              sql = sql.replace(evalReg, `${args[index]}`)
+            }
           })
+
+          // 这里想办法让他不解析，在启动时就拼接好
+          console.log(`sql查询${sql}`)
 
           return await db.query(sql)
         },
