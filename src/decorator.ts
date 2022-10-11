@@ -77,7 +77,7 @@ export const Sql = function (sql: string): FunctionAnnotation {
             funVarMap[item] = args[index]
 
             const spliceReg = new RegExp(`#{+\s*${item}+\s*}`, 'g')
-            const evalReg = new RegExp(`&{+\s*${item}+\s*}`, 'g')
+            const evalReg = new RegExp('\\' + `\${+\s*${item}+\s*}`, 'g')
 
             if (spliceReg.test(sql)) {
               sql = sql.replace(spliceReg, `'${args[index]}'`)
