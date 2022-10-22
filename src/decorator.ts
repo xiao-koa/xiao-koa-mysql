@@ -70,28 +70,42 @@ export const Sql = function (sql: string): FunctionAnnotation {
     process.nextTick(() => {
       let currentService = CurrentServiceMap.get(firstToLowerCase(target.constructor.name)) as any
 
-      let funVarMap: any = {}
       let p = new Proxy(target[propertyKey], {
-        apply: async function (target, thisBinding, args) {
-          getFunctionArgsName(target.toString())?.map((item, index) => {
-            funVarMap[item] = args[index]
+        apply: function (target, thisBinding, args) {
+          let currentSql = sql
 
-            const spliceReg = new RegExp(`#{+\s*${item}+\s*}`, 'g')
-            const evalReg = new RegExp('\\' + `\${+\s*${item}+\s*}`, 'g')
+          if (Object.prototype.toString.call(args[0]) == '[object Object]') {
+            for (let i in args[0]) {
+              const spliceReg = new RegExp(`#{+\s*${i}+\s*}`, 'g')
+              const evalReg = new RegExp('\\' + `\${+\s*${i}+\s*}`, 'g')
 
-            if (spliceReg.test(sql)) {
-              sql = sql.replace(spliceReg, `'${args[index]}'`)
-            } else if (evalReg.test(sql)) {
-              sql = sql.replace(evalReg, `${args[index]}`)
+              if (spliceReg.test(currentSql)) {
+                currentSql = currentSql.replace(spliceReg, `'${args[0][i]}'`)
+              } else if (evalReg.test(currentSql)) {
+                currentSql = currentSql.replace(evalReg, `${args[0][i]}`)
+              }
             }
-          })
+          } else {
+            getFunctionArgsName(target.toString())?.map((item, index) => {
+              const spliceReg = new RegExp(`#{+\s*${item}+\s*}`, 'g')
+              const evalReg = new RegExp('\\' + `\${+\s*${item}+\s*}`, 'g')
+
+              if (spliceReg.test(currentSql)) {
+                currentSql = currentSql.replace(spliceReg, `'${args[index]}'`)
+              } else if (evalReg.test(currentSql)) {
+                currentSql = currentSql.replace(evalReg, `${args[index]}`)
+              }
+            })
+          }
 
           // 这里想办法让他不解析，在启动时就拼接好
-          console.log(`sql查询${sql}`)
+          console.log(`sql查询${currentSql}`)
 
-          return await db.query(sql)
+          return db.query(currentSql)
         },
       })
+
+      target[propertyKey] = p
       currentService[propertyKey] = p
     })
   }
